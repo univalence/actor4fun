@@ -94,3 +94,5 @@ onLoadMessage := {
       |${header(raw"/_/--\ \_\_,  |_|  \_\_/ |_| \   |_| |_|   \_\_/ |_| \| ")}
       |${header(s"version: ${Keys.version.value}")}""".stripMargin
 }
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
