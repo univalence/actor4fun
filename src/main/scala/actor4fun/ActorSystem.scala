@@ -6,27 +6,27 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.ExecutionContext
 
 /**
-  * Registry for actors.
-  */
+ * Registry for actors.
+ */
 trait ActorSystem {
 
   /**
-    * Register an actor with its name and manage its communication.
-    *
-    * @param actor actor to register
-    * @param name name under which the actor should be registered
-    * @return a reference to the registered actor
-    */
+   * Register an actor with its name and manage its communication.
+   *
+   * @param actor actor to register
+   * @param name name under which the actor should be registered
+   * @return a reference to the registered actor
+   */
   def registerAndManage(name: String, actor: Actor): ActorRef
 
   /**
-    * Register an actor with its name and manage its communication.
-    *
-    * @param actor actor to register
-    * @param name name under which the actor should be registered
-    * @param actorProperties properties to set to this actor
-    * @return a reference to the registered actor
-    */
+   * Register an actor with its name and manage its communication.
+   *
+   * @param actor actor to register
+   * @param name name under which the actor should be registered
+   * @param actorProperties properties to set to this actor
+   * @return a reference to the registered actor
+   */
   def registerAndManage(
       name: String,
       actor: Actor,
@@ -34,38 +34,38 @@ trait ActorSystem {
   ): ActorRef
 
   /**
-    * Get set of registered actor names.
-    *
-    * This method is specifically used to send the registered actors
-    * by one actor system to a remote one.
-    *
-    * @return set of registered actor names.
-    */
+   * Get set of registered actor names.
+   *
+   * This method is specifically used to send the registered actors
+   * by one actor system to a remote one.
+   *
+   * @return set of registered actor names.
+   */
   def actorNames: Set[String]
 
   /**
-    * Retrieve an actor reference by its name.
-    *
-    * @param name actor to retrieve
-    * @return the actor reference or None if the name is unknown.
-    */
+   * Retrieve an actor reference by its name.
+   *
+   * @param name actor to retrieve
+   * @return the actor reference or None if the name is unknown.
+   */
   def findActorForName(name: String): Option[ActorRef]
 
   /**
-    * Unregister and stop an actor.
-    *
-    * @param actorRef reference of the actor to unregister.
-    */
+   * Unregister and stop an actor.
+   *
+   * @param actorRef reference of the actor to unregister.
+   */
   def unregisterAndStop(actorRef: ActorRef): Unit
 
   /**
-    * Shutdown this actor system and all its registered actors.
-    */
+   * Shutdown this actor system and all its registered actors.
+   */
   def shutdown(): Unit
 
   /**
-    * Wait for actor system thread to stop.
-    */
+   * Wait for actor system thread to stop.
+   */
   def awaitTermination(): Unit
 
   /**
@@ -138,5 +138,3 @@ case class ActorSystemProperties(
 case class ActorProperties(
     pollTimeout: (Long, TimeUnit)
 )
-
-

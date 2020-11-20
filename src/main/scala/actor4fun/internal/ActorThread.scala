@@ -7,18 +7,18 @@ import org.slf4j.{Logger, LoggerFactory}
 import scala.annotation.tailrec
 
 /**
-  * Provide running context to a single actor.
-  *
-  * This class acts as a wrapper for actors. It provides:
-  *   - an inbox (blocking queue)
-  *   - an async interface to push messages into the inbox
-  *   - a sync process that take messages from the inbox and push
-  *   them to the actor
-  *   - notification that the actor is starting is shut down
-  *
-  * @param actor actor to wrap
-  * @param properties
-  */
+ * Provide running context to a single actor.
+ *
+ * This class acts as a wrapper for actors. It provides:
+ *   - an inbox (blocking queue)
+ *   - an async interface to push messages into the inbox
+ *   - a sync process that take messages from the inbox and push
+ *   them to the actor
+ *   - notification that the actor is starting is shut down
+ *
+ * @param actor actor to wrap
+ * @param properties
+ */
 private[internal] class ActorThread(
     name: String,
     actor: Actor,
@@ -30,20 +30,20 @@ private[internal] class ActorThread(
   val isRunning: AtomicBoolean           = new AtomicBoolean(false)
 
   /**
-    * Add a message in the actor inbox.
-    *
-    * @param message message to add.
-    */
+   * Add a message in the actor inbox.
+   *
+   * @param message message to add.
+   */
   def pushMessage(message: ActorMessage): Unit = {
     logger.debug(s"""push message $message""")
     inbox.put(message)
   }
 
   /**
-    * Inbox reading loop.
-    *
-    * @param self self reference of the wrapped actor.
-    */
+   * Inbox reading loop.
+   *
+   * @param self self reference of the wrapped actor.
+   */
   @tailrec
   private def loop(self: ActorRef): Unit =
     if (isRunning.get()) {
@@ -60,11 +60,11 @@ private[internal] class ActorThread(
   }
 
   /**
-    * Signal the wrapped actor that its thread has started and launch
-    * inbox reading loop.
-    *
-    * @param self self reference of the wrapped actor.
-    */
+   * Signal the wrapped actor that its thread has started and launch
+   * inbox reading loop.
+   *
+   * @param self self reference of the wrapped actor.
+   */
   def start(self: ActorRef): Unit = {
     if (isRunning.compareAndSet(false, true)) {
       logger.debug(s"starting actor thread")
@@ -75,8 +75,8 @@ private[internal] class ActorThread(
   }
 
   /**
-    * Signal the wrapped actor that its thread has stopped.
-    */
+   * Signal the wrapped actor that its thread has stopped.
+   */
   override def shutdown(): Unit = {
     if (isRunning.compareAndSet(true, false)) {
       logger.debug("stopping actor")

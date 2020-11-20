@@ -88,9 +88,8 @@ class ProxyActor(servers: Seq[ActorRef]) extends Actor {
       logger.info(s"get message and send it: $message")
       servers
         .zip(ids)
-        .foreach {
-          case (server, id) =>
-            server ! EchoRequest(id, message)
+        .foreach { case (server, id) =>
+          server ! EchoRequest(id, message)
         }
   }
 }

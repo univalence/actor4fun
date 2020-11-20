@@ -1,6 +1,14 @@
 package actor4fun.internal
 
-import actor4fun.{Actor, ActorProperties, ActorRef, ActorSystem, ActorSystemProperties, ScheduleTask, Shutdownable}
+import actor4fun.{
+  Actor,
+  ActorProperties,
+  ActorRef,
+  ActorSystem,
+  ActorSystemProperties,
+  ScheduleTask,
+  Shutdownable
+}
 import java.util.concurrent.TimeUnit
 import java.util.{Timer, TimerTask}
 import org.slf4j.{Logger, LoggerFactory}
@@ -8,12 +16,12 @@ import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * Common implementation for actor systems.
-  *
-  * @param name actor system name
-  * @param properties actor system properties
-  * @param ec thread pool used by the actor system
-  */
+ * Common implementation for actor systems.
+ *
+ * @param name actor system name
+ * @param properties actor system properties
+ * @param ec thread pool used by the actor system
+ */
 private[internal] abstract class BaseActorSystem(
     val name: String,
     val properties: ActorSystemProperties,

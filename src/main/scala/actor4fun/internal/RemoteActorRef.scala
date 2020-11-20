@@ -1,7 +1,11 @@
 package actor4fun.internal
 
 import actor4fun.internal.RemoteActorSystem.serialize
-import actor4fun.internal.network.{ActorEndPointGrpc, NetActorMessage, NetActorRef}
+import actor4fun.internal.network.{
+  ActorEndPointGrpc,
+  NetActorMessage,
+  NetActorRef
+}
 import actor4fun.{ActorMessage, ActorRef, ActorSystem}
 import com.google.protobuf.ByteString
 import java.net.URI
@@ -9,10 +13,10 @@ import org.slf4j.{Logger, LoggerFactory}
 import scala.util.Try
 
 case class RemoteActorRef(
-                           override val name: String,
-                           actorSystemRef: RemoteActorSystemRef,
-                           actorSystem: RemoteActorSystem
-                         ) extends ActorRef {
+    override val name: String,
+    actorSystemRef: RemoteActorSystemRef,
+    actorSystem: RemoteActorSystem
+) extends ActorRef {
 
   val logger: Logger = LoggerFactory.getLogger(s"$name-ref")
 
@@ -21,13 +25,13 @@ case class RemoteActorRef(
     logger.debug(s"sending $message to $sender")
     this match {
       case RemoteActorRef(name, actorSystemRef, system)
-        if actorSystemRef == system.self =>
+          if actorSystemRef == system.self =>
         system
           .actors(system.refs(name))
           .pushMessage(ActorMessage(sender, message))
 
       case RemoteActorRef(_, actorSystemRef, system)
-        if actorSystemRef != system.self =>
+          if actorSystemRef != system.self =>
         sender match {
           case RemoteActorRef(_, senderSysRef, system) =>
             val channel =
@@ -49,9 +53,9 @@ case class RemoteActorRef(
                 .blockingStub(channel)
                 .receive(
                   NetActorMessage(
-                    sender = Option(senderRef),
+                    sender   = Option(senderRef),
                     receiver = Option(receiverRef),
-                    payload = payload
+                    payload  = payload
                   )
                 )
             } finally { channel.shutdown() }
@@ -60,7 +64,9 @@ case class RemoteActorRef(
 //          case LocalActorRef(_, _) => ???
 
           case _ =>
-            throw new IllegalArgumentException(s"unmanaged sender reference $sender")
+            throw new IllegalArgumentException(
+              s"unmanaged sender reference $sender"
+            )
         }
 
       case _ =>
@@ -78,8 +84,8 @@ object RemoteActorRef {
    * @return actor name and actor system reference
    */
   private[internal] def fromURI(
-                              uriStr: String
-                            ): Option[(String, RemoteActorSystemRef)] = {
+      uriStr: String
+  ): Option[(String, RemoteActorSystemRef)] = {
     for {
       uri    <- Try { URI.create(uriStr) }.toOption
       scheme <- Option(uri.getScheme)

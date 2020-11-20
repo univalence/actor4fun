@@ -3,10 +3,10 @@ name := "actor4fun"
 description := "Actor library in Scala made for educational purpose"
 
 startYear := Option(2020)
-homepage := scmInfo.value map (_.browseUrl)
+homepage  := scmInfo.value map (_.browseUrl)
 
-organization := "io.univalence"
-organizationName := "Univalence"
+organization         := "io.univalence"
+organizationName     := "Univalence"
 organizationHomepage := Some(url("https://univalence.io/"))
 
 licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
@@ -20,34 +20,34 @@ scmInfo := Some(
 
 developers := List(
   Developer(
-    id = "jwinandy",
-    name = "Jonathan Winandy",
+    id    = "jwinandy",
+    name  = "Jonathan Winandy",
     email = "jonathan@univalence.io",
-    url = url("https://github.com/ahoy-jon")
+    url   = url("https://github.com/ahoy-jon")
   ),
   Developer(
-    id = "phong",
-    name = "Philippe Hong",
+    id    = "phong",
+    name  = "Philippe Hong",
     email = "philippe@univalence.io",
-    url = url("https://github.com/hwki77")
+    url   = url("https://github.com/hwki77")
   ),
   Developer(
-    id = "fsarradin",
-    name = "François Sarradin",
+    id    = "fsarradin",
+    name  = "François Sarradin",
     email = "francois@univalence.io",
-    url = url("https://github.com/fsarradin")
+    url   = url("https://github.com/fsarradin")
   ),
   Developer(
-    id = "bernit77",
-    name = "Bernarith Men",
+    id    = "bernit77",
+    name  = "Bernarith Men",
     email = "bernarith@univalence.io",
-    url = url("https://github.com/bernit77")
+    url   = url("https://github.com/bernit77")
   ),
   Developer(
-    id = "HarrisonCheng",
-    name = "Harrison Cheng",
+    id    = "HarrisonCheng",
+    name  = "Harrison Cheng",
     email = "harrison@univalence.io",
-    url = url("https://github.com/HarrisonCheng")
+    url   = url("https://github.com/HarrisonCheng")
   )
 )
 
@@ -65,7 +65,7 @@ val libVersion = new {
   }
 }
 
-scalaVersion := libVersion.scala2_13
+scalaVersion       := libVersion.scala2_13
 crossScalaVersions := Seq(libVersion.scala2_13, libVersion.scala2_12)
 
 libraryDependencies ++= Seq(

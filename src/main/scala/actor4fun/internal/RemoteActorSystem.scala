@@ -6,23 +6,29 @@ import actor4fun.{Actor, ActorProperties, ActorRef, ActorSystemProperties}
 import com.google.protobuf.ByteString
 import com.google.protobuf.empty.Empty
 import io.grpc.{ManagedChannel, ManagedChannelBuilder, Server, ServerBuilder}
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
+import java.io.{
+  ByteArrayInputStream,
+  ByteArrayOutputStream,
+  ObjectInputStream,
+  ObjectOutputStream
+}
 import java.net.InetAddress
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-/** Registry for actors with ability to manage distant comminucations.
-  *
-  * It manages directly actors it creates and establishes link with
-  * remote actor system when actors needs to communicate with remote
-  * ones.
-  *
-  * @param name actor system name
-  * @param host host name or adress of this actor system
-  * @param port listening port for incoming communication
-  * @param properties actor system properties
-  * @param ec thread pool used by the actor system
-  */
+/**
+ * Registry for actors with ability to manage distant comminucations.
+ *
+ * It manages directly actors it creates and establishes link with
+ * remote actor system when actors needs to communicate with remote
+ * ones.
+ *
+ * @param name actor system name
+ * @param host host name or adress of this actor system
+ * @param port listening port for incoming communication
+ * @param properties actor system properties
+ * @param ec thread pool used by the actor system
+ */
 class RemoteActorSystem private[actor4fun] (
     override val name: String,
     val host: String,
@@ -82,16 +88,17 @@ class RemoteActorSystem private[actor4fun] (
       remoteRef
     }
 
-  /** Retrieve an actor reference by its name.
-    *
-    * Name might be of the form:
-    *   - `<actor_name>` for actor local to this actor system
-    *   - `actor://<host>:<port>/<actor_name>` to find a
-    *     remote actor
-    *
-    * @param name actor to retrieve.
-    * @return the actor reference or None if the name is unknown.
-    */
+  /**
+   * Retrieve an actor reference by its name.
+   *
+   * Name might be of the form:
+   *   - `<actor_name>` for actor local to this actor system
+   *   - `actor://<host>:<port>/<actor_name>` to find a
+   *     remote actor
+   *
+   * @param name actor to retrieve.
+   * @return the actor reference or None if the name is unknown.
+   */
   override def findActorForName(name: String): Option[ActorRef] = {
     logger.debug(s"finding $name")
     if (name.startsWith(s"${RemoteActorRef.uriActorScheme}://")) {
@@ -118,12 +125,13 @@ class RemoteActorSystem private[actor4fun] (
     }
   }
 
-  /** Get the names registered on a remote actor system.
-    *
-    * @param host remote actor system host.
-    * @param port remote actor system port.
-    * @return set of registered actor names on the remote actor system.
-    */
+  /**
+   * Get the names registered on a remote actor system.
+   *
+   * @param host remote actor system host.
+   * @param port remote actor system port.
+   * @return set of registered actor names on the remote actor system.
+   */
   private def getRemoteNames(host: String, port: Int): Set[String] = {
     val channel: ManagedChannel = connect(host, port)
     try {
@@ -166,8 +174,9 @@ class RemoteActorSystem private[actor4fun] (
     Await.ready(future, Duration.Inf)
   }
 
-  /** Service to handle remote actor system requests.
-    */
+  /**
+   * Service to handle remote actor system requests.
+   */
   class RemoteHandlerService extends ActorEndPoint {
 
     def toRemoteActorRef(netRef: NetActorRef): RemoteActorRef =

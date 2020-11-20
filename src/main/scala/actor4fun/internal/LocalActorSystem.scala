@@ -10,7 +10,11 @@ class LocalActorSystem private[actor4fun] (
 )(implicit ec: ExecutionContext)
     extends BaseActorSystem(name, properties, ec) {
 
-  override def registerAndManage(name: String, actor: Actor, actorProperties: ActorProperties): ActorRef = {
+  override def registerAndManage(
+      name: String,
+      actor: Actor,
+      actorProperties: ActorProperties
+  ): ActorRef = {
     if (refs.contains(name))
       throw new IllegalArgumentException(s"$name already registered")
 
