@@ -27,7 +27,7 @@ trait ActorRef {
   /**
    * Send a message to the actor referenced by this object.
    *
-   * This method is used in the definition of [[Actor.receive()]] to
+   * This method is used in the definition of [[Actor.receive]] to
    * send a message to another actor, without explicitly referencing
    * `self`.
    *
