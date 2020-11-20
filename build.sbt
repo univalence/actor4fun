@@ -85,6 +85,8 @@ PB.targets in Compile := Seq(
   scalapb.gen() -> (sourceManaged in Compile).value / "scalapb"
 )
 
+publishTo in ThisBuild := sonatypePublishToBundle.value
+
 onLoadMessage := {
   def header(text: String): String =
     s"${scala.Console.GREEN}$text${scala.Console.RESET}"
