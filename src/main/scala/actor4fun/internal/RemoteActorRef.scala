@@ -12,6 +12,23 @@ import java.net.URI
 import org.slf4j.{Logger, LoggerFactory}
 import scala.util.Try
 
+/**
+ * Reference to an actor with remote communication capability.
+ *
+ * The reference contains two actor systems:
+ *  - a reference to the actor system managing the referenced actor
+ *  (it may be local or remote),
+ *  - the local actor system that has created this reference.
+ *
+ *  If the reference to the actor system is equivalent the local actor
+ *  system, them this reference is a reference to a local. If not,
+ *  them this reference is a reference to a remote actor.
+ *
+ * @param name name of the actor
+ * @param actorSystemRef reference to the actor system managing the
+ *                       actor
+ * @param actorSystem actor system managing this reference
+ */
 case class RemoteActorRef(
     override val name: String,
     actorSystemRef: RemoteActorSystemRef,
