@@ -49,6 +49,13 @@ private[internal] class ActorThread(
     if (isRunning.get()) {
       Option(inbox.poll(properties.pollTimeout._1, properties.pollTimeout._2))
         .foreach(message => processMessage(self, message))
+
+      /* Here, we use a recursive function.
+       * The tailrec annotation above ensures that we have a tail
+       * recursive function, that is then translated by Scala compiler
+       * into a while-loop in the bytecode. So, at the end, we have no
+       * recursive call and we have no StackOverflowError.
+       */
       loop(self)
     } else ()
 
