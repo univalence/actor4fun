@@ -64,6 +64,16 @@ private[internal] abstract class BaseActorSystem(
     refs.remove(actorRef.name)
   }
 
+  override def clearActors(): Unit = {
+    logger.debug(s"clear all actors")
+
+    actors.values.foreach(_.shutdown())
+
+    actors.clear()
+    threads.clear()
+    refs.clear()
+  }
+
   /** @inheritdoc */
   override def schedule(delay: Int, period: Int)(
       task: () => Unit

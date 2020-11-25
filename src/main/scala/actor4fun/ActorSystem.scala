@@ -59,6 +59,11 @@ trait ActorSystem {
   def unregisterAndStop(actorRef: ActorRef): Unit
 
   /**
+   * Shutdown and remove all actors from the register.
+   */
+  def clearActors(): Unit
+
+  /**
    * Shutdown this actor system and all its registered actors.
    */
   def shutdown(): Unit
