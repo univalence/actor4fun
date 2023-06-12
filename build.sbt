@@ -52,12 +52,12 @@ developers := List(
 )
 
 val libVersion = new {
-  val logback       = "1.2.3"
-  val scala2_12     = "2.12.18"
-  val scala2_13     = "2.13.11"
-  val slf4j         = "1.7.30"
-  val scalacheck    = "1.14.1"
-  val scalatest     = "3.2.2"
+  val logback       = "1.4.7"
+  val scala2_13     = "2.13.10"
+  val scala3        = "3.3.0"
+  val slf4j         = "2.0.7"
+  val scalacheck    = "1.17.0"
+  val scalatest     = "3.2.16"
   val scalatestplus = s"$scalatest.0"
   val scalatestplus_scalacheck = {
     val Some((major, minor)) = CrossVersion.partialVersion(scalacheck)
@@ -65,21 +65,35 @@ val libVersion = new {
   }
 }
 
-scalaVersion       := libVersion.scala2_13
-crossScalaVersions := Seq(libVersion.scala2_13, libVersion.scala2_12)
+scalaVersion := libVersion.scala2_13
+crossScalaVersions := Seq(
+  libVersion.scala2_13,
+  libVersion.scala3
+)
 
 libraryDependencies ++= Seq(
-  "ch.qos.logback"        % "logback-classic"      % libVersion.logback,
-  "ch.qos.logback"        % "logback-core"         % libVersion.logback,
-  "org.slf4j"             % "slf4j-api"            % libVersion.slf4j,
-  "io.grpc"               % "grpc-netty"           % scalapb.compiler.Version.grpcJavaVersion,
-  "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion,
-  "com.thesamet.scalapb" %% "scalapb-runtime"      % scalapb.compiler.Version.scalapbVersion % "protobuf"
+  "ch.qos.logback"          % "logback-classic"         % libVersion.logback,
+  "ch.qos.logback"          % "logback-core"            % libVersion.logback,
+  "org.slf4j"               % "slf4j-api"               % libVersion.slf4j,
+  "io.grpc"                 % "grpc-netty"              % scalapb.compiler.Version.grpcJavaVersion,
+  "com.thesamet.scalapb"   %% "scalapb-runtime-grpc"    % scalapb.compiler.Version.scalapbVersion,
+  "com.thesamet.scalapb"   %% "scalapb-runtime"         % scalapb.compiler.Version.scalapbVersion % "protobuf",
 ) ++ Seq(
   "org.scalatest"     %% "scalatest"                                          % libVersion.scalatest,
   "org.scalacheck"    %% "scalacheck"                                         % libVersion.scalacheck,
   "org.scalatestplus" %% s"scalacheck-${libVersion.scalatestplus_scalacheck}" % libVersion.scalatestplus
 ).map(_ % Test)
+
+scalacOptions ++= {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((3, _)) =>
+      Seq(
+        "-noindent"
+      )
+    case _ =>
+      Seq.empty
+  }
+}
 
 Compile / PB.targets := Seq(
   scalapb.gen() -> (Compile / sourceManaged).value / "scalapb"
