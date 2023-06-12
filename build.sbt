@@ -81,11 +81,11 @@ libraryDependencies ++= Seq(
   "org.scalatestplus" %% s"scalacheck-${libVersion.scalatestplus_scalacheck}" % libVersion.scalatestplus
 ).map(_ % Test)
 
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value / "scalapb"
+Compile / PB.targets := Seq(
+  scalapb.gen() -> (Compile / sourceManaged).value / "scalapb"
 )
 
-publishTo in ThisBuild := sonatypePublishToBundle.value
+ThisBuild / publishTo := sonatypePublishToBundle.value
 
 onLoadMessage := {
   def header(text: String): String =
