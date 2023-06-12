@@ -18,7 +18,7 @@ package object internal {
     def hasStarted: Boolean  = inHasStarted.get()
     def hasShutdown: Boolean = inHasShutdown.get()
     def messages: Iterable[Any] =
-      scala.collection.JavaConverters.asScala(inMessages)
+      scala.jdk.CollectionConverters.CollectionHasAsScala(inMessages).asScala
 
     def waitForStart(duration: Long): Unit = {
       startLock.await(duration, TimeUnit.MILLISECONDS)

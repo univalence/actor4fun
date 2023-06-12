@@ -20,6 +20,7 @@ object HelloMain {
 }
 
 class Hello extends Actor {
-  override def receive(sender: ActorRef)(implicit self: ActorRef): Receive =
-    message => println(s"Hello $message!")
+  override def receive(sender: ActorRef)(implicit self: ActorRef): Receive = {
+    case message => println(s"Hello $message!")
+  }
 }

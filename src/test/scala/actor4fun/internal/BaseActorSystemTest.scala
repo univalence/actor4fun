@@ -46,8 +46,9 @@ class BaseActorSystemTest
   test("should unregister an actor will shut down it") {
     val actor = new TestActor
     val ref = system.registerAndManage("test", actor)
-    system.unregisterAndStop(ref)
 
+    actor.waitForStart(2000)
+    system.unregisterAndStop(ref)
     actor.waitForShutdown(2000)
 
     assert(actor.hasShutdown)
