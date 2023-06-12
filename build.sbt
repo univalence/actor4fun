@@ -53,8 +53,8 @@ developers := List(
 
 val libVersion = new {
   val logback       = "1.2.3"
-  val scala2_12     = "2.12.12"
-  val scala2_13     = "2.13.4"
+  val scala2_12     = "2.12.18"
+  val scala2_13     = "2.13.11"
   val slf4j         = "1.7.30"
   val scalacheck    = "1.14.1"
   val scalatest     = "3.2.2"
