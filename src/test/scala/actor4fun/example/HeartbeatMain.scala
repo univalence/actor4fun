@@ -139,7 +139,7 @@ class HeartbeatEmitter(id: String, var receiver: ActorRef, system: ActorSystem)
 
   override def onShutdown(): Unit = {
     if (heartbeatScheduleTask != null) heartbeatScheduleTask.shutdown()
-    logger.info("shut dowm")
+    logger.info("shutdown")
   }
 }
 

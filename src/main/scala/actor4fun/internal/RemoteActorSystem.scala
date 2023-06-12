@@ -42,7 +42,8 @@ class RemoteActorSystem private[actor4fun] (
   val address: String = InetAddress.getByName(host).getHostAddress
 
   val self: RemoteActorSystemRef = RemoteActorSystemRef(address, port)
-  private val server: Server     = createServer(port)
+
+  private val server: Server = createServer(port)
 
   locally {
     logger.debug(s"starting server on $port...")

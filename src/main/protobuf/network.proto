@@ -26,7 +26,7 @@ message NetActorMessage {
   NetActorRef sender = 1;
   NetActorRef receiver = 2;
   /**
-   * Serialized body of this message.
+   * Serialized data of this message.
    *
    * This serialized form allows to transport data not defined in
    * protobuf. Any kind of serializer can be used (Java
@@ -41,18 +41,27 @@ message NetActorMessage {
  */
 message Ack {
   bool isOk = 1;
-  string error = 2;
+  string error = 2; // optional
 }
 
-
+/**
+ * Represent a set of actor names.
+ */
 message ActorNames {
   repeated string names = 1;
 }
 
 /**
- * Interface of the remote actor to receive messages.
+ * Interface to implement by remote actor systems.
  */
 service ActorEndPoint {
+  /**
+   * Ensure remote call of an actor.
+   */
   rpc receive (NetActorMessage) returns (Ack);
+
+  /**
+   * Get the set of actor names from a remote actor system
+   */
   rpc actorNames (google.protobuf.Empty) returns (ActorNames);
 }

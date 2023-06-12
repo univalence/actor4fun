@@ -72,14 +72,13 @@ private[internal] class ActorThread(
    *
    * @param self self reference of the wrapped actor.
    */
-  def start(self: ActorRef): Unit = {
+  def start(self: ActorRef): Unit =
     if (isRunning.compareAndSet(false, true)) {
       logger.debug(s"starting actor thread")
       actor.onStart(self)
 
       loop(self)
     }
-  }
 
   /**
    * Signal the wrapped actor that its thread has stopped.
